@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#F2DFB5"><meta name="description" content="A retro Nordic guitar and chromatic tuner with settled pitch detection."><title>GOOD TUNE — Guitar Tuner</title>
+<style>
+:root{--paper:#F2DFB5;--cream:#FFF3D9;--mustard:#EABF58;--red:#E44D2C;--blue:#1F426A;--ink:#191919;--brick:#B83E27}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.5 system-ui,-apple-system,sans-serif}button,select{font:inherit}button,select{min-height:48px;border:3px solid var(--ink);border-radius:6px}button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:3px}button{cursor:pointer;font-weight:850}button:disabled{opacity:.48;cursor:not-allowed}.app{width:min(100% - 32px,560px);margin:auto;min-height:100dvh;display:flex;flex-direction:column;padding:22px 0 24px;gap:17px}.masthead{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:3px solid var(--ink);padding-bottom:12px}.brand{display:flex;align-items:center;gap:10px}.brandmark{width:44px;height:44px;border:3px solid var(--ink);border-radius:6px;background:var(--mustard);display:grid;place-items:center}.eyebrow{color:var(--brick);font-size:11px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}.brandname{font-family:Impact,'Arial Black',system-ui,sans-serif;font-size:27px;line-height:1;letter-spacing:-.02em}.status{font-size:11px;font-weight:900;letter-spacing:.06em;text-align:right;color:var(--blue)}.hero{text-align:center;padding:7px 0 0}.hero h1{font-family:Impact,'Arial Black',system-ui,sans-serif;font-size:clamp(42px,11vw,65px);line-height:.98;margin:0;text-transform:uppercase;letter-spacing:-.025em}.hero p{margin:10px 0 0;color:var(--blue);font-size:14px;font-weight:650}.readout{background:var(--cream);border:3px solid var(--ink);border-radius:7px;padding:18px 14px 15px;text-align:center}.readout .eyebrow{margin-bottom:3px}.note{font-family:Impact,'Arial Black',system-ui,sans-serif;font-size:clamp(90px,27vw,145px);line-height:1.08;letter-spacing:-.045em;min-height:116px}.frequency{color:var(--blue);font-size:16px;font-weight:750;min-height:24px}.meter-wrap{margin:0 -3px}.meter{width:100%;height:auto;display:block}.cents{font-family:Impact,'Arial Black',system-ui,sans-serif;font-size:42px;line-height:1.1}.direction{font-weight:800;color:var(--blue);min-height:28px;margin-top:4px}.hint{min-height:20px;color:var(--blue);font-size:13px;font-weight:650;margin-top:8px}.controls{display:flex;gap:10px}.controls button{padding:12px 15px}#start{background:var(--red);color:#fff;flex:1}#stop{background:var(--cream);color:var(--ink);min-width:94px}button:not(:disabled):active{transform:translateY(1px)}.settings{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--brick)}select{width:100%;background:var(--cream);color:var(--ink);padding:8px 9px;font-size:14px;font-weight:750}.error{color:var(--brick);font-size:14px;font-weight:750;text-align:center;min-height:0}.foot{margin-top:auto;padding-top:12px;border-top:3px solid var(--ink);display:flex;justify-content:space-between;gap:12px;font-size:12px;font-weight:650;color:var(--blue)}.foot a{color:var(--blue)}@media(max-width:355px){.app{gap:12px}.brandname{font-size:23px}.note{min-height:100px}.settings{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style></head><body><main class="app">
+<header class="masthead"><div class="brand"><div class="brandmark" aria-hidden="true"><svg width="29" height="29" viewBox="0 0 29 29"><path d="M6 23V6m0 7h17M23 6v17" stroke="#191919" stroke-width="3" fill="none"/><circle cx="6" cy="6" r="3" fill="#E44D2C"/><circle cx="23" cy="23" r="3" fill="#E44D2C"/></svg></div><div><div class="eyebrow">Sigfly sound tools</div><div class="brandname">GOOD TUNE.</div></div></div><div class="status" id="status" aria-live="polite">MIC OFF</div></header>
+<section class="hero"><h1>FIND YOUR <span style="color:var(--red)">NOTE.</span></h1><p>Pluck a string. Follow the needle.</p></section>
+<section class="readout" aria-label="Tuning readout"><div class="eyebrow">Nearest note</div><div class="note" id="note" aria-live="off">—</div><div class="frequency" id="frequency">Waiting for microphone</div>
+<div class="meter-wrap"><svg class="meter" viewBox="0 0 320 155" role="img" aria-label="Tuning needle: left is flat, right is sharp"><path d="M35 116 A125 125 0 0 1 285 116" fill="none" stroke="#D3BC91" stroke-width="12" stroke-linecap="round"/><path d="M147 27 A125 125 0 0 1 173 27" fill="none" stroke="#1F426A" stroke-width="12" stroke-linecap="round"/><g id="ticks"></g><line id="needle" x1="160" y1="116" x2="160" y2="29" stroke="#E44D2C" stroke-width="4" stroke-linecap="round"/><circle cx="160" cy="116" r="7" fill="#191919"/><text x="10" y="148" fill="#1F426A" font-size="14" font-weight="800">♭ FLAT</text><text x="160" y="17" text-anchor="middle" fill="#1F426A" font-size="13" font-weight="800">0</text><text x="310" y="148" text-anchor="end" fill="#1F426A" font-size="14" font-weight="800">SHARP ♯</text></svg></div>
+<div class="cents" id="cents">— cents</div><div class="direction" id="direction" role="status">Play a single note</div><div class="hint" id="hint">Ignore attack · average settled pitch</div></section>
+<div class="controls"><button id="start" type="button">● START TUNING</button><button id="stop" type="button" disabled>STOP</button></div>
+<section class="settings" aria-label="Tuner settings"><div class="field"><label for="mode">Tuning mode</label><select id="mode"><option value="guitar">Guitar · settled</option><option value="live">Chromatic · live</option></select></div><div class="field"><label for="a4">A4 reference</label><select id="a4"><option value="440">440 Hz</option><option value="442">442 Hz</option><option value="432">432 Hz</option></select></div></section>
+<div class="error" id="error" role="alert"></div><footer class="foot"><span>Audio stays on your device.<br>Microphone requires HTTPS or localhost.</span><a href="https://sigfly.github.io/">SIGFLY ↗</a></footer>
+</main><script>
+(()=>{'use strict';const $=id=>document.getElementById(id),names=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];let ctx=null,stream=null,analyser=null,buffer=null,raf=0,last=0,smoothed=null,lastGood=0,pluckStart=0,stableSamples=[],previousRms=0,previousPitch=null;const ticks=$('ticks');for(let i=-5;i<=5;i++){let a=i*Math.PI/10,x=160+125*Math.sin(a),y=116-125*Math.cos(a),x2=160+113*Math.sin(a),y2=116-113*Math.cos(a);let el=document.createElementNS('http://www.w3.org/2000/svg','line');for(const [k,v] of Object.entries({x1:x,y1:y,x2,y2,stroke:i===0?'#1F426A':'#191919','stroke-width':i===0?3:1.5}))el.setAttribute(k,v);ticks.appendChild(el)}
+function detect(data,sr){const n=data.length;let rms=0;for(let i=0;i<n;i++)rms+=data[i]*data[i];if(Math.sqrt(rms/n)<.012)return null;const min=Math.max(2,Math.floor(sr/1100)),max=Math.min(Math.floor(sr/65),Math.floor(n/2)),span=n-max;let best=-1,bestScore=1;const scores=new Float32Array(max+1);for(let lag=min;lag<=max;lag++){let sum=0,energy=0;for(let i=0;i<span;i++){let d=data[i]-data[i+lag];sum+=d*d;energy+=data[i]*data[i]+data[i+lag]*data[i+lag]}let score=sum/(energy+1e-12);scores[lag]=score;if(score<bestScore){bestScore=score;best=lag}}if(best<0||bestScore>.22)return null;let threshold=Math.max(.025,bestScore*1.5);for(let i=min+1;i<max-1;i++)if(scores[i]<threshold&&scores[i]<=scores[i-1]&&scores[i]<=scores[i+1]){best=i;break}let a=scores[best-1]||scores[best],b=scores[best],c=scores[best+1]||scores[best],den=a-2*b+c,delta=Math.abs(den)>1e-9?Math.max(-1,Math.min(1,.5*(a-c)/den)):0;return sr/(best+delta)}
+function show(f){let midi=69+12*Math.log2(f/Number($('a4').value)),nearest=Math.round(midi),cents=(midi-nearest)*100,tuned=Math.abs(cents)<=5;$('note').textContent=names[((nearest%12)+12)%12]+(Math.floor(nearest/12)-1);$('frequency').textContent=f.toFixed(1)+' Hz';$('cents').textContent=(cents>0?'+':'')+cents.toFixed(1)+' cents';$('direction').textContent=tuned?'✓ In tune':cents<0?'♭ Flat — tune higher':'♯ Sharp — tune lower';$('direction').style.color=tuned?'#1F426A':'#B83E27';$('needle').setAttribute('transform',`rotate(${Math.max(-50,Math.min(50,cents))*.9} 160 116)`);$('needle').setAttribute('stroke',tuned?'#1F426A':'#E44D2C')}
+function resetPluck(){pluckStart=0;stableSamples=[];previousPitch=null;smoothed=null}
+function loop(t){
+ if(!ctx)return;
+ if(t-last>85){
+  last=t;analyser.getFloatTimeDomainData(buffer);
+  let energy=0;for(let i=0;i<buffer.length;i++)energy+=buffer[i]*buffer[i];
+  const rms=Math.sqrt(energy/buffer.length),f=detect(buffer,ctx.sampleRate),guitar=$('mode').value==='guitar';
+  if(f&&f>=65&&f<=1100){
+   if(!guitar){
+    if(smoothed===null||Math.abs(12*Math.log2(f/smoothed))>.65)smoothed=f;
+    else smoothed=.55*smoothed+.45*f;
+    show(smoothed);$('hint').textContent='Live pitch tracking';
+   }else{
+    // A new note is recognized after silence, a substantial amplitude rise,
+    // or a change to a different semitone. Ordinary decay does not retrigger.
+    const changed=previousPitch!==null&&Math.abs(12*Math.log2(f/previousPitch))>.65;
+    const attack=previousRms>.008&&rms>previousRms*2.2&&rms>.025;
+    if(!pluckStart||changed||attack){pluckStart=t;stableSamples=[];smoothed=null;}
+    const elapsed=t-pluckStart;
+    if(elapsed<150){$('hint').textContent='Ignoring initial attack…';}
+    else{
+     // Keep a rolling ~600ms window, using log-frequency (cents) averaging.
+     stableSamples.push({t,log:Math.log2(f)});
+     stableSamples=stableSamples.filter(v=>t-v.t<=600);
+     const mean=stableSamples.reduce((sum,v)=>sum+v.log,0)/stableSamples.length;
+     const target=Math.pow(2,mean);
+     smoothed=smoothed===null?target:Math.pow(2,.65*Math.log2(smoothed)+.35*mean);
+     show(smoothed);
+     $('hint').textContent=elapsed<450?'Measuring settled pitch…':'Settled pitch · averaging';
+    }
+   }
+   previousPitch=f;lastGood=t;
+  }else if(t-lastGood>550){
+   $('frequency').textContent='Listening…';$('direction').textContent='Play a single note';
+   $('hint').textContent=guitar?'Waiting for next pluck':'Live pitch tracking';resetPluck();
+  }
+  previousRms=rms;
+ }
+ raf=requestAnimationFrame(loop);
+}
+$('mode').addEventListener('change',()=>{resetPluck();previousRms=0;$('hint').textContent=$('mode').value==='guitar'?'Ignore attack · average settled pitch':'Live pitch tracking'});
+$('start').addEventListener('click',async()=>{try{$('error').textContent='';if(!navigator.mediaDevices?.getUserMedia)throw Error('Microphone access requires HTTPS or localhost. A file opened directly may not work.');stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});ctx=new(window.AudioContext||window.webkitAudioContext)();await ctx.resume();let source=ctx.createMediaStreamSource(stream);analyser=ctx.createAnalyser();analyser.fftSize=8192;source.connect(analyser);buffer=new Float32Array(analyser.fftSize);$('start').disabled=true;$('stop').disabled=false;$('status').textContent='LISTENING';resetPluck();previousRms=0;lastGood=performance.now();raf=requestAnimationFrame(loop)}catch(e){$('error').textContent=e.message||'Could not access microphone';if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;if(ctx)await ctx.close();ctx=null}});
+$('stop').addEventListener('click',async()=>{cancelAnimationFrame(raf);if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;const old=ctx;ctx=null;if(old)await old.close();resetPluck();previousRms=0;$('start').disabled=false;$('stop').disabled=true;$('status').textContent='MIC OFF';$('note').textContent='—';$('frequency').textContent='Waiting for microphone';$('cents').textContent='— cents';$('direction').textContent='Play a single note';$('needle').setAttribute('transform','rotate(0 160 116)')});})();
+</script></body></html>
